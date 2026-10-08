@@ -1,0 +1,4 @@
+# Domäner som ALDRIG ska blockeras, även om en uppströmslista innehåller dem.
+# En domän per rad. Exakt matchning.
+# Exempel:
+# s.youtube.com

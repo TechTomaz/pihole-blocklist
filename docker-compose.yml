@@ -1,0 +1,16 @@
+services:
+  blocklist:
+    build: .
+    container_name: pihole-blocklist
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      REFRESH_HOURS: "12"
+    volumes:
+      # Montera listorna så att ändringar slår igenom vid nästa ombygge utan rebuild
+      - ./lists:/app/lists:ro
+      - data:/data
+
+volumes:
+  data:

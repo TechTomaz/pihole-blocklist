@@ -1,0 +1,2 @@
+# Egna domäner som alltid ska blockeras, utöver uppströmslistorna.
+# En domän per rad.
