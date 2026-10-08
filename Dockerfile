@@ -2,6 +2,9 @@ FROM python:3.12-alpine
 WORKDIR /app
 COPY blocklist.py .
 COPY lists/ ./lists/
+# 568 = TrueNAS standardanvändare "apps"
+RUN mkdir /data && chown 568:568 /data
+USER 568:568
 ENV OUTPUT_DIR=/data PORT=8080 REFRESH_HOURS=12 PYTHONUNBUFFERED=1
 VOLUME /data
 EXPOSE 8080

@@ -37,6 +37,26 @@ Listan byggs vid start och sedan var `REFRESH_HOURS`:e timme (default 12).
 Eftersom `lists/` monteras in räcker det att `git pull` på servern – ändringarna
 slår igenom vid nästa ombygge (eller direkt med `docker compose restart`).
 
+## Köra på TrueNAS SCALE
+
+Imagen byggs automatiskt (amd64 + arm64) av GitHub Actions vid varje push till `main`
+och publiceras som `ghcr.io/techtomaz/pihole-blocklist:latest`.
+
+1. Skapa ett dataset för datat, t.ex. `tank/apps/pihole-blocklist`, och ge användaren
+   `apps` (568) skrivrätt. Containern kör som 568:568.
+2. **Apps → Discover Apps → ⋮ → Install via YAML** och klistra in
+   [`deploy/truenas-compose.yml`](deploy/truenas-compose.yml). Justera dataset-sökvägen och porten.
+3. Listan nås på `http://<truenas-ip>:8080/blocklist.txt`.
+
+Källorna ligger inbakade i imagen. Ändra `lists/`, pusha, vänta på att Actions blir klar och
+uppdatera sedan appen i TrueNAS, som drar ny `latest` eftersom `pull_policy: always` är satt.
+
+Bygga lokalt för TrueNAS från en Mac med Apple Silicon:
+
+```sh
+docker buildx build --platform linux/amd64 -t pihole-blocklist .
+```
+
 ## Köra utan Docker
 
 ```sh

@@ -1,0 +1,14 @@
+# TrueNAS SCALE: Apps → Discover Apps → ⋮ → Install via YAML
+# Byt ut dataset-sökvägen nedan mot ett eget dataset (ägt av apps, 568:568).
+services:
+  pihole-blocklist:
+    image: ghcr.io/techtomaz/pihole-blocklist:latest
+    pull_policy: always
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      REFRESH_HOURS: "12"
+      TZ: "Europe/Stockholm"
+    volumes:
+      - /mnt/tank/apps/pihole-blocklist:/data
